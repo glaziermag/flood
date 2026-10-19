@@ -3,7 +3,7 @@ name: Distribute for Arch Linux
 on:
   workflow_dispatch:
   workflow_run:
-    workflows: ['Release']
+    workflows: ['Publish Packages']
     types:
       - completed
 
@@ -14,4 +14,4 @@ jobs:
     steps:
       - run: |
           echo "event=${{ github.event_name }}"
-          echo "upstream workflow=${{ github.event.workflow_run.name }}"
+          echo "upstream workflow=${{ github.event.workflow_run.name }} id=${{ github.event.workflow_run.id }}"
