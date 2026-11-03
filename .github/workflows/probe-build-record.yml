@@ -1,0 +1,20 @@
+name: probe-build-record
+on:
+  push:
+    branches: [probe-build-record]
+jobs:
+  probe:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+      - name: Build with a secret passed as a build-arg (same shape as distribute-archlinux.yml)
+        uses: docker/build-push-action@v7
+        with:
+          build-args: |
+            PROBE_KEY=${{ secrets.PROBE_KEY }}
+            PLAIN_ARG=plain-visible-value-31337
+          context: ./probe
+          file: ./probe/Dockerfile
+          platforms: linux/amd64
